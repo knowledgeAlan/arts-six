@@ -6,7 +6,7 @@
 
 ## 1：一级缓存设置
 
-###1.1:mybatis-config文件配置
+### 1.1:mybatis-config文件配置
 
 ![image-20190812190930492](images/mybatis-config.png)
 
@@ -16,7 +16,8 @@
 
 ### 1.2: 测试代码
 
-![image-20190812191210142](images/cache-test.png)
+
+![cache-test](images/cache-test.png)
 
 ###1.3:测试结果
 
@@ -177,28 +178,8 @@ mybatis有一级和二级缓存，一级缓存默认开启，二级缓存默认�
 
 
 
-## 一级缓存默认是开启，是session级别，是关闭不了，可以配置localCacheScope=STATEMENT范围
-
-```java
-org.apache.ibatis.builder.xml.XMLConfigBuilder#settingsElement(){
-  ………………
-      configuration.setCacheEnabled(booleanValueOf(props.getProperty("cacheEnabled"), true));
-…………
-}
-```
 
 
 
-```java
-org.apache.ibatis.executor.BaseExecutor#query(org.apache.ibatis.mapping.MappedStatement, java.lang.Object, org.apache.ibatis.session.RowBounds, org.apache.ibatis.session.ResultHandler, org.apache.ibatis.cache.CacheKey, org.apache.ibatis.mapping.BoundSql){
-    ……………………
-     // issue #601
-      deferredLoads.clear();
-      if (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) {
-        // issue #482
-        清除一级缓存
-        clearLocalCache();
-      }
-}
-```
+
 
